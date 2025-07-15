@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: llmops
-  templates:
+  template:  # ✅ Corrected
     metadata:
       labels:
         app: llmops
@@ -22,19 +22,19 @@ spec:
           - containerPort: 8501
         envFrom:
           - secretRef:
-              name: llmops-secrets
+              name: llmops-secret  # ✅ Corrected name
 
 ---
 
-
-apiversion: v1
+apiVersion: v1  # ✅ Corrected spelling
 kind: Service
 metadata:
-  name: LoadBalancer
+  name: llmops-service  # ✅ Better name, avoid using "LoadBalancer" as name
+spec:
+  type: LoadBalancer  # ✅ This is how you specify the type
   selector:
     app: llmops
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8501
-
