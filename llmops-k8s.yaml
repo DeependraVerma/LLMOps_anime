@@ -9,29 +9,27 @@ spec:
   selector:
     matchLabels:
       app: llmops
-  template:  # ✅ Corrected
+  template:
     metadata:
       labels:
         app: llmops
     spec:
       containers:
-      - name: llmops-container
-        image: anime-llmops:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 8501
-        envFrom:
-          - secretRef:
-              name: llmops-secret  # ✅ Corrected name
-
+        - name: llmops-container
+          image: anime-llmops:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8501
+          envFrom:
+            - secretRef:
+                name: llmops-secret
 ---
-
-apiVersion: v1  # ✅ Corrected spelling
+apiVersion: v1
 kind: Service
 metadata:
-  name: llmops-service  # ✅ Better name, avoid using "LoadBalancer" as name
+  name: llmops-service
 spec:
-  type: LoadBalancer  # ✅ This is how you specify the type
+  type: LoadBalancer
   selector:
     app: llmops
   ports:
